@@ -144,11 +144,8 @@ As this is only a demo in the simulation framework `duckietown-world`, no setup 
 Make sure you have a computer on which the following packages are installed (the installation has only been testes on Naitive Ubuntu 16.04)
 
 * Check: Desktop-full installation of ROS - for instructions see [here](http://wiki.ros.org/kinetic/Installation)
-* Check: that you have an ssh key for your computer [here](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/)
 * Check: installed pip, virtualenv [here](https://www.saltycrane.com/blog/2010/02/how-install-pip-ubuntu/)
-* Check: installed catkin build [here](https://catkin-tools.readthedocs.io/en/latest/installing.html)
-
-TODO: make restart branch to master
+* Check: installed catkin-tools [here](https://catkin-tools.readthedocs.io/en/latest/installing.html)
 
 ## Demo instructions {#demo-theobstavoidalgorithm-run}
 
@@ -159,7 +156,7 @@ If you are *lazy* you can just create a folder on your computer in which we will
 ```
 $ . ./setup_from_blank_folder.bash
 ```
-
+If this worked you can now skipt to step 2.
 
 
 ### Step 1: Virtual environment setup
@@ -182,37 +179,30 @@ Install duckietown-world now in the virtual environment, as we depend on librari
 
 Clone the mplan-repo with the following command. Make sure you are inside the `src` folder of a catkin workspace. If you do not have a catkin workspace set up follow these [instructions](https://github.com/duckietown/duckietown-mplan/wiki/Setting-up-a-catkin-workspace).
 ```
-$ git clone https://github.com/duckietown/duckietown-mplan.git
+$ git clone https://github.com/duckietown/duckietown-mplan2.git
 ```
 
 Enter the repo
 ```
-$ cd duckietown-mplan
+$ cd duckietown-mplan2
 ```
 
 Install the additional requirements using
 ```
-$ pip install -r requirements.txt
+$ pip install -r lib-mplan/requirements.txt
+```
+You will likely receive an error of the compatibility of networkx. This can be ignored safely.
+
+Load the submodules
+```
+$ git submodule update --init --recursive
 ```
 
-Load the submodules and build the workspace
+Build the workspace from the initial workspace folder
 ```
-$ git submodule init
-$ git submodule update
-```
-
-Load the submodule’s submodules
-```
-$ cd duckietown-fplan
-$ git submodule init
-$ git submodule update
-```
-Build the workspace from the initial folder
-```
-$ cd ../../..
+$ cd ../..
 $ catkin build
 ```
-Run `catkin_make` instead if you don't use `python-catkin-tools`.
 
 Next, source your workspace using
 ```
@@ -223,9 +213,11 @@ $ source devel/setup.bash
 
 Run the demo including a visualization in rviz with 
 ```
-$ roslaunch obst_avoid obst_avoid_withviz_demo.launch demo_num:=1
+$ roslaunch duckietown_mplan obst_avoid_withviz_demo.launch demo_num:=1
 
 ```
+Give the demo some time to start up (~15 seconds)
+
 With the parameter `demo_num` you can select a specific scenario. The scenarios are as follows:
  * 1 : dynamic passing of a moving object
  * 2 : passing of a static object with a dynamic object on the other side of the street
@@ -235,13 +227,13 @@ With the parameter `demo_num` you can select a specific scenario. The scenarios 
   
 ### Step 4: Teleoperating another duckiebot (optional)
 
-
 In the next step we will take control of another duckiebot, to see how the actor and the obstavoid algorithm will react to it.
 
 Keep the simulation from before running and in a new terminal launch (don't forget to activate your virtualenvironment and source the catkin workspace)
 ```
-$ rosrun obst_avoid duckiebot_teleop_node.py
+$ rosrun duckietown_mplan duckiebot_teleop_node.py
 ```
+
 Using 'i', 'j', 'l', ',' you can now teleoperate another duckiebot. With 'q', 'w' you can in-/ decrease it's speed. Make sure to keep the terminal selected, else the keyboard inputs will not be processed.
 
 

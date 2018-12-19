@@ -174,8 +174,6 @@ Make sure you have a computer on which the following packages are installed (the
 * Check: installed pip, virtualenv [here](https://www.saltycrane.com/blog/2010/02/how-install-pip-ubuntu/)
 * Check: installed catkin build [here](https://catkin-tools.readthedocs.io/en/latest/installing.html)
 
-TODO: make restart branch to master
-
 ## Demo instructions {#demo-theobstavoidalgorithm-run}
 
 ### Step 0 - 2 with no effort
